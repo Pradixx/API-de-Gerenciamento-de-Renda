@@ -26,6 +26,7 @@ import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { FilterTransactionDto } from './dto/filter-transaction.dto';
 import { TransactionResponseDto } from './dto/transaction-response.dto';
+import { SummaryResponseDto } from './dto/summary-response.dto';
 
 @ApiTags('Transactions')
 @ApiBearerAuth()
@@ -48,6 +49,13 @@ export class TransactionsController {
   @ApiOperation({ summary: 'Listar transações com filtros e paginação' })
   findAll(@CurrentUser() user: User, @Query() filters: FilterTransactionDto) {
     return this.transactionsService.findAll(user.id, filters);
+  }
+
+  @Get('summary')
+  @ApiOperation({ summary: 'Resumo financeiro do usuário' })
+  @ApiResponse({ status: 200, type: SummaryResponseDto })
+  getSummary(@CurrentUser() user: User): Promise<SummaryResponseDto> {
+    return this.transactionsService.getSummary(user.id);
   }
 
   @Get(':id')
