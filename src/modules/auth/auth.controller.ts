@@ -12,7 +12,9 @@ export class AuthController {
 
   @Post('register')
   @ApiOperation({ summary: 'Cadastrar novo usuário' })
-  @ApiResponse({ status: 201, type: AuthResponseDto })
+  @ApiResponse({ status: 201, type: AuthResponseDto, description: 'Usuário criado com sucesso' })
+  @ApiResponse({ status: 409, description: 'E-mail já cadastrado' })
+  @ApiResponse({ status: 400, description: 'Dados inválidos' })
   register(@Body() dto: CreateUserDto): Promise<AuthResponseDto> {
     return this.authService.register(dto);
   }
@@ -20,7 +22,8 @@ export class AuthController {
   @Post('login')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Autenticar usuário' })
-  @ApiResponse({ status: 200, type: AuthResponseDto })
+  @ApiResponse({ status: 200, type: AuthResponseDto, description: 'Login realizado com sucesso' })
+  @ApiResponse({ status: 401, description: 'Credenciais inválidas' })
   login(@Body() dto: LoginDto): Promise<AuthResponseDto> {
     return this.authService.login(dto);
   }
