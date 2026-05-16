@@ -1,98 +1,250 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# API de Gerenciamento de Renda
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+API REST para controle financeiro pessoal, desenvolvida como desafio técnico back-end.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Sobre o Desafio
 
-## Description
+> Desenvolver uma API utilizando TypeScript e NestJS, simulando um sistema simples de controle financeiro.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### Requisitos funcionais
 
-## Project setup
+- **Autenticação de usuários** — cadastro e login com nome, e-mail e senha. Rotas protegidas exigem autenticação.
+- **Gerenciamento de transações** — criar, listar, atualizar e remover transações (entrada e saída) do usuário autenticado.
+- **Resumo financeiro** — endpoint com total de entradas, total de saídas e saldo final.
 
-```bash
-$ npm install
-```
+### Diferenciais implementados
 
-## Compile and run the project
+- Paginação e filtros por tipo e data nas listagens
+- Hash de senha com bcrypt
+- Validação de dados com `class-validator`
+- Separação de camadas: controllers / services / repositories
+- Organização por módulos (auth, users, transactions)
+- Seeds com dados iniciais para facilitar testes
+- Documentação completa via Swagger
 
-```bash
-# development
-$ npm run start
+---
 
-# watch mode
-$ npm run start:dev
+## Stack
 
-# production mode
-$ npm run start:prod
-```
+| Tecnologia     | Versão  |
+|----------------|---------|
+| Node.js        | 20+     |
+| NestJS         | 11      |
+| TypeScript     | 5       |
+| TypeORM        | 0.3     |
+| PostgreSQL      | 16      |
+| Docker         | —       |
+| JWT + Passport | —       |
+| Jest           | 30      |
 
-## Run tests
+---
 
-```bash
-# unit tests
-$ npm run test
+## Como rodar o projeto
 
-# e2e tests
-$ npm run test:e2e
+### Pré-requisitos
 
-# test coverage
-$ npm run test:cov
-```
+- [Node.js 20+](https://nodejs.org/)
+- [Docker](https://www.docker.com/)
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### 1. Clone o repositório e instale as dependências
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npm install
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### 2. Configure as variáveis de ambiente
 
-## Resources
+```bash
+cp .env.example .env
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+O `.env` já vem preenchido com os valores padrão para desenvolvimento local.
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### 3. Suba o banco de dados com Docker
 
-## Support
+```bash
+docker compose up -d
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### 4. (Opcional) Popule o banco com dados iniciais
 
-## Stay in touch
+```bash
+npm run seed
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Isso cria o seguinte usuário de teste:
 
-## License
+| Campo  | Valor             |
+|--------|-------------------|
+| E-mail | diego@email.com   |
+| Senha  | senha123          |
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### 5. Inicie a aplicação
+
+```bash
+# desenvolvimento (hot reload)
+npm run start:dev
+
+# produção
+npm run start:prod
+```
+
+A API estará disponível em: `http://localhost:3000`
+
+---
+
+## Documentação (Swagger)
+
+Acesse `http://localhost:3000/docs` para visualizar e testar todos os endpoints interativamente.
+
+---
+
+## Endpoints
+
+### Auth
+
+| Método | Rota             | Descrição              | Auth |
+|--------|------------------|------------------------|------|
+| POST   | /auth/register   | Cadastrar usuário      | Não  |
+| POST   | /auth/login      | Autenticar usuário     | Não  |
+
+### Transactions
+
+| Método | Rota                      | Descrição                          | Auth |
+|--------|---------------------------|------------------------------------|------|
+| POST   | /transactions             | Criar transação                    | Sim  |
+| GET    | /transactions             | Listar transações (filtros + página) | Sim  |
+| GET    | /transactions/summary     | Resumo financeiro                  | Sim  |
+| GET    | /transactions/:id         | Buscar transação por ID            | Sim  |
+| PUT    | /transactions/:id         | Atualizar transação                | Sim  |
+| DELETE | /transactions/:id         | Remover transação                  | Sim  |
+
+### Filtros disponíveis em GET /transactions
+
+| Parâmetro  | Tipo   | Exemplo      |
+|------------|--------|--------------|
+| type       | string | income / expense |
+| startDate  | string | 2026-01-01   |
+| endDate    | string | 2026-12-31   |
+| page       | number | 1            |
+| limit      | number | 10           |
+
+---
+
+## Exemplos de requisição
+
+### Cadastrar usuário
+
+```bash
+curl -X POST http://localhost:3000/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"name": "Diego Prado", "email": "diego@email.com", "password": "senha123"}'
+```
+
+### Login
+
+```bash
+curl -X POST http://localhost:3000/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email": "diego@email.com", "password": "senha123"}'
+```
+
+### Criar transação
+
+```bash
+curl -X POST http://localhost:3000/transactions \
+  -H "Authorization: Bearer SEU_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"description": "Salário", "amount": 5000, "type": "income", "date": "2026-05-01"}'
+```
+
+### Resumo financeiro
+
+```bash
+curl http://localhost:3000/transactions/summary \
+  -H "Authorization: Bearer SEU_TOKEN"
+```
+
+**Resposta:**
+
+```json
+{
+  "totalIncome": 6500.00,
+  "totalExpense": 2050.00,
+  "balance": 4450.00
+}
+```
+
+---
+
+## Testes
+
+```bash
+# Testes unitários
+npm run test
+
+# Testes e2e (requer banco rodando)
+npm run test:e2e
+
+# Cobertura
+npm run test:cov
+```
+
+---
+
+## Variáveis de ambiente
+
+| Variável       | Descrição                  | Padrão                |
+|----------------|----------------------------|-----------------------|
+| DB_HOST        | Host do PostgreSQL         | localhost             |
+| DB_PORT        | Porta do PostgreSQL        | 5432                  |
+| DB_USERNAME    | Usuário do banco           | postgres              |
+| DB_PASSWORD    | Senha do banco             | postgres              |
+| DB_NAME        | Nome do banco de dados     | renda_db              |
+| JWT_SECRET     | Chave secreta do JWT       | —                     |
+| JWT_EXPIRES_IN | Expiração do token         | 7d                    |
+| PORT           | Porta da aplicação         | 3000                  |
+
+---
+
+## Estrutura do projeto
+
+```
+src/
+├── config/
+│   └── database.config.ts
+├── common/
+│   ├── decorators/
+│   │   └── current-user.decorator.ts
+│   └── guards/
+│       └── jwt-auth.guard.ts
+├── database/
+│   └── seeds/
+│       └── seed.ts
+└── modules/
+    ├── auth/
+    │   ├── dto/
+    │   ├── strategies/
+    │   ├── auth.controller.ts
+    │   ├── auth.service.ts
+    │   └── auth.module.ts
+    ├── users/
+    │   ├── dto/
+    │   ├── entities/
+    │   ├── users.service.ts
+    │   └── users.module.ts
+    └── transactions/
+        ├── dto/
+        ├── entities/
+        ├── transactions.controller.ts
+        ├── transactions.service.ts
+        └── transactions.module.ts
+```
+
+---
+
+## Autor
+
+**Diego Silva Prado**
+- GitHub: [Pradixx](https://github.com/Pradixx)
+- LinkedIn: [diego-prado-dev](https://www.linkedin.com/in/diego-prado-dev/)
