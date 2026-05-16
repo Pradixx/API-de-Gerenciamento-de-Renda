@@ -6,6 +6,8 @@ import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { FilterTransactionDto } from './dto/filter-transaction.dto';
 import { TransactionResponseDto } from './dto/transaction-response.dto';
+import { SummaryResponseDto } from './dto/summary-response.dto';
+import { TransactionType } from './entities/transaction.entity';
 
 export interface PaginatedResult<T> {
   data: T[];
@@ -83,5 +85,28 @@ export class TransactionsService {
     if (!transaction) throw new NotFoundException('Transação não encontrada');
     if (transaction.userId !== userId) throw new ForbiddenException();
     await this.transactionsRepository.remove(transaction);
+  }
+
+  async getSummary(userId: string): Promise<SummaryResponseDto> {
+    const result = await this.transactionsRepository
+      .createQueryBuilder('t')
+      .select('t.type', 'type')
+      .addSelect('SUM(t.amount)', 'total')
+      .where('t.user_id = :userId', { userId })
+      .groupBy('t.type')
+      .getRawMany<{ type: TransactionType; total: string }>();
+
+    const totalIncome = Number(
+      result.find((r) => r.type === TransactionType.INCOME)?.total ?? 0,
+    );
+    const totalExpense = Number(
+      result.find((r) => r.type === TransactionType.EXPENSE)?.total ?? 0,
+    );
+
+    return {
+      totalIncome,
+      totalExpense,
+      balance: totalIncome - totalExpense,
+    };
   }
 }
